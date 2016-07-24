@@ -25003,7 +25003,7 @@
 
 	    function renderError() {
 	      if (typeof errorMessage === 'string') {
-	        return React.createElement(ErrorModal, null);
+	        return React.createElement(ErrorModal, { message: errorMessage });
 	      }
 	    }
 
@@ -26478,18 +26478,23 @@
 	  },
 
 	  render: function render() {
+	    var _props = this.props;
+	    var title = _props.title;
+	    var message = _props.message;
+
+
 	    return React.createElement(
 	      'div',
 	      { id: 'error-modal', className: 'reveal tiny text-center', 'data-reveal': '' },
 	      React.createElement(
 	        'h4',
 	        null,
-	        'Some Title'
+	        title
 	      ),
 	      React.createElement(
 	        'p',
 	        null,
-	        'Our error message!'
+	        message
 	      ),
 	      React.createElement(
 	        'p',
