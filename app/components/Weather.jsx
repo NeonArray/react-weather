@@ -15,7 +15,9 @@ var Weather = React.createClass({
   handleSearch: function (location) {
     this.setState({
       isLoading: true,
-      errorMessage: undefined
+      errorMessage: undefined,
+      location: undefined,
+      temp: undefined
     });
 
     openWeatherMap.getTemp(location).then((temp) => {
@@ -30,6 +32,39 @@ var Weather = React.createClass({
         errorMessage: e.message
       });
     });
+  },
+
+  componentDidMount: function () {
+    // Grab the URL param location
+    var location = this.props.location.query.location;
+
+    if (location && location.length) {
+      // Execute a search with the location
+      this.handleSearch(location);
+
+      // Clear the URL parameters
+      window.location.hash = '#/';
+    }
+  },
+
+  /**
+   * When the component is receiving new props from another component
+   * in this case the top-nav search bar. When it executes it passes
+   * a new hash value into the URL string. This function will receive
+   * that change and then execute the search
+   * @param newProps
+   */
+  componentWillReceiveProps: function (newProps) {
+    // Grab the URL param location
+    var location = newProps.location.query.location;
+
+    if (location && location.length) {
+      // Execute a search with the location
+      this.handleSearch(location);
+
+      // Clear the URL parameters
+      window.location.hash = '#/';
+    }
   },
 
   render: function () {

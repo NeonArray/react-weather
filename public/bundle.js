@@ -113,7 +113,8 @@
 	__webpack_require__(254);
 	$(document).foundation();
 
-	// App css
+	// Application styles
+	// the style!, css!, sass! are loaders used by webpack
 	__webpack_require__(260);
 
 	ReactDOM.render(React.createElement(
@@ -24863,7 +24864,15 @@
 
 	  onSearch: function onSearch(e) {
 	    e.preventDefault();
-	    alert('Not yet wired up');
+
+	    var encodedLocation = encodeURIComponent(this.refs.search.value);
+
+	    if (encodedLocation.length) {
+	      // Reset the search field
+	      this.refs.search.value = '';
+
+	      window.location.hash = '#/?location=' + encodedLocation;
+	    }
 	  },
 
 	  render: function render() {
@@ -24922,7 +24931,7 @@
 	            React.createElement(
 	              'li',
 	              null,
-	              React.createElement('input', { type: 'search', placeholder: 'Search weather by city' })
+	              React.createElement('input', { type: 'search', placeholder: 'Search weather by city', ref: 'search' })
 	            ),
 	            React.createElement(
 	              'li',
@@ -24965,7 +24974,9 @@
 
 	    this.setState({
 	      isLoading: true,
-	      errorMessage: undefined
+	      errorMessage: undefined,
+	      location: undefined,
+	      temp: undefined
 	    });
 
 	    openWeatherMap.getTemp(location).then(function (temp) {
@@ -24980,6 +24991,39 @@
 	        errorMessage: e.message
 	      });
 	    });
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    // Grab the URL param location
+	    var location = this.props.location.query.location;
+
+	    if (location && location.length) {
+	      // Execute a search with the location
+	      this.handleSearch(location);
+
+	      // Clear the URL parameters
+	      window.location.hash = '#/';
+	    }
+	  },
+
+	  /**
+	   * When the component is receiving new props from another component
+	   * in this case the top-nav search bar. When it executes it passes
+	   * a new hash value into the URL string. This function will receive
+	   * that change and then execute the search
+	   * @param newProps
+	   */
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    // Grab the URL param location
+	    var location = newProps.location.query.location;
+
+	    if (location && location.length) {
+	      // Execute a search with the location
+	      this.handleSearch(location);
+
+	      // Clear the URL parameters
+	      window.location.hash = '#/';
+	    }
 	  },
 
 	  render: function render() {

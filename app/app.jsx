@@ -10,7 +10,8 @@ var Examples = require('Examples');
 require('style!css!foundation-sites/dist/foundation.min.css');
 $(document).foundation();
 
-// App css
+// Application styles
+// the style!, css!, sass! are loaders used by webpack
 require('style!css!sass!applicationStyles');
 
 ReactDOM.render(
