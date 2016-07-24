@@ -4,7 +4,13 @@ var WeatherMessage = require('WeatherMessage');
 var openWeatherMap = require('openWeatherMap');
 var ErrorModal = require('ErrorModal');
 
+
 var Weather = React.createClass({
+
+  /**
+   * Lifecycle Method
+   * @returns {{isLoading: boolean, errorMessage: undefined}}
+   */
   getInitialState: function () {
     return {
       isLoading: false,
@@ -12,6 +18,12 @@ var Weather = React.createClass({
     };
   },
 
+
+  /**
+   * Execute a GET request to the API and
+   * handle the response with the component state
+   * @param location
+   */
   handleSearch: function (location) {
     this.setState({
       isLoading: true,
@@ -23,7 +35,7 @@ var Weather = React.createClass({
     openWeatherMap.getTemp(location).then((temp) => {
       this.setState({
         location: location,
-        temp: temp,
+        temp: Math.ceil(temp),
         isLoading: false
       });
     }, (e) => {
@@ -34,6 +46,11 @@ var Weather = React.createClass({
     });
   },
 
+
+  /**
+   * Lifecycle Method
+   * The component mounted, now what
+   */
   componentDidMount: function () {
     // Grab the URL param location
     var location = this.props.location.query.location;
@@ -47,7 +64,9 @@ var Weather = React.createClass({
     }
   },
 
+
   /**
+   * Lifecycle Method
    * When the component is receiving new props from another component
    * in this case the top-nav search bar. When it executes it passes
    * a new hash value into the URL string. This function will receive
@@ -67,8 +86,13 @@ var Weather = React.createClass({
     }
   },
 
+
+  /**
+   * Render the Weather component
+   * @returns {XML}
+   */
   render: function () {
-    let {isLoading, temp, location, errorMessage} = this.state;
+    let { isLoading, temp, location, errorMessage } = this.state;
 
     function renderMessage() {
       if (isLoading) {

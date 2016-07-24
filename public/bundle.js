@@ -106,16 +106,16 @@
 
 	var Main = __webpack_require__(223);
 	var Weather = __webpack_require__(225);
-	var About = __webpack_require__(252);
-	var Examples = __webpack_require__(253);
+	var About = __webpack_require__(253);
+	var Examples = __webpack_require__(254);
 
 	// load foundation
-	__webpack_require__(254);
+	__webpack_require__(255);
 	$(document).foundation();
 
 	// Application styles
 	// the style!, css!, sass! are loaders used by webpack
-	__webpack_require__(260);
+	__webpack_require__(259);
 
 	ReactDOM.render(React.createElement(
 	  Router,
@@ -24931,7 +24931,7 @@
 	            React.createElement(
 	              'li',
 	              null,
-	              React.createElement('input', { type: 'search', placeholder: 'Search weather by city', ref: 'search' })
+	              React.createElement('input', { type: 'search', placeholder: 'Search weather by city', ref: 'search', required: 'true' })
 	            ),
 	            React.createElement(
 	              'li',
@@ -24962,6 +24962,11 @@
 	var Weather = React.createClass({
 	  displayName: 'Weather',
 
+
+	  /**
+	   * Lifecycle Method
+	   * @returns {{isLoading: boolean, errorMessage: undefined}}
+	   */
 	  getInitialState: function getInitialState() {
 	    return {
 	      isLoading: false,
@@ -24969,6 +24974,11 @@
 	    };
 	  },
 
+	  /**
+	   * Execute a GET request to the API and
+	   * handle the response with the component state
+	   * @param location
+	   */
 	  handleSearch: function handleSearch(location) {
 	    var _this = this;
 
@@ -24982,7 +24992,7 @@
 	    openWeatherMap.getTemp(location).then(function (temp) {
 	      _this.setState({
 	        location: location,
-	        temp: temp,
+	        temp: Math.ceil(temp),
 	        isLoading: false
 	      });
 	    }, function (e) {
@@ -24993,6 +25003,10 @@
 	    });
 	  },
 
+	  /**
+	   * Lifecycle Method
+	   * The component mounted, now what
+	   */
 	  componentDidMount: function componentDidMount() {
 	    // Grab the URL param location
 	    var location = this.props.location.query.location;
@@ -25007,6 +25021,7 @@
 	  },
 
 	  /**
+	   * Lifecycle Method
 	   * When the component is receiving new props from another component
 	   * in this case the top-nav search bar. When it executes it passes
 	   * a new hash value into the URL string. This function will receive
@@ -25026,6 +25041,10 @@
 	    }
 	  },
 
+	  /**
+	   * Render the Weather component
+	   * @returns {XML}
+	   */
 	  render: function render() {
 	    var _state = this.state;
 	    var isLoading = _state.isLoading;
@@ -25080,6 +25099,11 @@
 	var WeatherForm = React.createClass({
 	  displayName: 'WeatherForm',
 
+
+	  /**
+	   *
+	   * @param e
+	   */
 	  onFormSubmit: function onFormSubmit(e) {
 	    e.preventDefault();
 
@@ -25095,7 +25119,7 @@
 	    return React.createElement(
 	      'form',
 	      { onSubmit: this.onFormSubmit },
-	      React.createElement('input', { type: 'search', placeholder: 'Search weather by city', ref: 'location' }),
+	      React.createElement('input', { type: 'search', placeholder: 'Search weather by city', ref: 'location', required: 'true' }),
 	      React.createElement(
 	        'button',
 	        { type: 'submit', className: 'expanded button hollow' },
@@ -26503,7 +26527,7 @@
 
 	var React = __webpack_require__(8);
 	var ReactDOM = __webpack_require__(165);
-	var ReactDOMServer = __webpack_require__(262);
+	var ReactDOMServer = __webpack_require__(252);
 
 	var ErrorModal = React.createClass({
 	  displayName: 'ErrorModal',
@@ -26566,6 +26590,15 @@
 /* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	module.exports = __webpack_require__(155);
+
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	var React = __webpack_require__(8);
@@ -26619,7 +26652,7 @@
 	module.exports = About;
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26673,16 +26706,16 @@
 	module.exports = Examples;
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(255);
+	var content = __webpack_require__(256);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(257)(content, {});
+	var update = __webpack_require__(258)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26699,10 +26732,10 @@
 	}
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(256)();
+	exports = module.exports = __webpack_require__(257)();
 	// imports
 
 
@@ -26713,7 +26746,7 @@
 
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports) {
 
 	/*
@@ -26769,7 +26802,7 @@
 
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -27023,18 +27056,16 @@
 
 
 /***/ },
-/* 258 */,
-/* 259 */,
-/* 260 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(261);
+	var content = __webpack_require__(260);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(257)(content, {});
+	var update = __webpack_require__(258)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27051,10 +27082,10 @@
 	}
 
 /***/ },
-/* 261 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(256)();
+	exports = module.exports = __webpack_require__(257)();
 	// imports
 
 
@@ -27062,15 +27093,6 @@
 	exports.push([module.id, ".page-title {\n  color: #555;\n  margin: 2.5rem 0; }\n\ninput[type=\"search\"] {\n  box-shadow: none; }\n", ""]);
 
 	// exports
-
-
-/***/ },
-/* 262 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(155);
 
 
 /***/ }
