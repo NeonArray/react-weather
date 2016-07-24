@@ -7,11 +7,14 @@ var ErrorModal = require('ErrorModal');
 var Weather = React.createClass({
   getInitialState: function () {
     return {
-      isLoading: false
+      isLoading: false,
+      errorMessage: undefined
     };
   },
 
   handleSearch: function (location) {
+    var _self = this;
+
     this.setState({
       isLoading: true,
       errorMessage: undefined
